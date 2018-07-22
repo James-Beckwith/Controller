@@ -1,7 +1,6 @@
 # Amazing fast and autonomous car powered by a Raspberry Pi 
 
- - https://github.com/James-Beckwith/Controllerhttps://github.com/James-Beckwith/Controller
-
+ - https://github.com/James-Beckwith/Controller
 ## VNC
 ### On the server
  - x11vnc -storepasswd .vncpassword
