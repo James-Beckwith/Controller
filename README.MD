@@ -1,6 +1,7 @@
 # Amazing fast and autonomous car powered by a Raspberry Pi 
 
- - https://github.com/James-Beckwith/Controller
+ - https://github.com/James-Beckwith/Controllerhttps://github.com/James-Beckwith/Controller
+
 ## VNC
 ### On the server
  - x11vnc -storepasswd .vncpassword
@@ -33,7 +34,16 @@
 
 1. The screen size was bigger than my phone screen so I had to scroll along the window with phone, this was difficult and will cause problems.
 Let me know
+	- I think this problem can be solved by making the window size as big as the screen. This will prevent user from modifying the raspberry pi setting (i.e. the will access only the python window)...	
+	- Discovered another problem: it's not easy no click on a tactile screen... Maybe trigger event when the finger go over the screen. We can talk about this tomorrow.
 
 2. I want the controller program to start up automatically when I log into the VNC.  I didn't manage to do this, although I only spent 2 minutes trying to do it. I currently just have a shell script on the desktop that I double click to start the program
+ 	- https://serverfault.com/questions/639926/ubuntu-run-a-command-when-vnc-session-starts (Does not work for me, so such file as .vncstartup)
 
 3. Can we limit the VNC connection to one person at a time. If multiple people are connected then how does this affect the controls?
+	No solution found...	
+	- https://ubuntuforums.org/archive/index.php/t-1472471.html
+	- http://www.karlrunge.com/x11vnc/x11vnc_opts.html (X11VNC_CREATE_MAX_DISPLAYS=n) 
+	
+
+
