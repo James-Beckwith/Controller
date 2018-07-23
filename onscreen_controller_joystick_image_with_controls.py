@@ -49,13 +49,13 @@ flag=0
 def updateMotors(rad,pointDist,dx,dy):
     # define contribution ot forward, reverse, left right
     speed = 100 * pointDist / rad
-    ang = atan2(y,x) # angle is measured from positive x direction in radians
+    ang = math.atan2(dy,dx) # angle is measured from positive x direction in radians
     if (dx < 0): # going left
         speedLeft = speed
         speedRight = speed * (math.pi - math.fabs(ang)) / (math.pi / 2)
     else: # going right
         speedRight = speed
-        speedLeft = speed * (math.pi - math.fabs(ang)) / (math.pi / 2)
+        speedLeft = speed * (math.fabs(ang)) / (math.pi / 2)
     # set motor values accordingly
     if (dy < 0): # going backwards
         pwmMotorAForwards.ChangeDutyCycle(speedLeft)
@@ -74,12 +74,12 @@ def motion(event):
         #check if current point is within oval
         global imgCent
         rad = 0.5 * img.width() # Note, I am assuming a square image#
-        dx = (imgCent[0] - x)
+        dx = (x - imgCent[0])
         dy = (imgCent[1] - y)
         pointDist = (dx ** 2 + dy ** 2) ** 0.5
         # if cursor is within current window, do something
         if (pointDist<rad):
-            print('{}, {}'.format(x, y))
+           # print('{}, {}'.format(dx, dy))
             # change motors given on update cursor location
             updateMotors(rad,pointDist,dx,dy)
 def setFlag(event): # after button is pressed, allow movement to control car
@@ -90,10 +90,10 @@ def unsetFlag(event): # stop motors if button is released
     global pwmMotorAForwards, pwmMotorBForwards, pwmMotorABackwards, pwmMotorBBackwards
     flag=0
     # stop mtors
-    pwmMotorAForwards.start(Stop)
-    pwmMotorABackwards.start(Stop)
-    pwmMotorBForwards.start(Stop)
-    pwmMotorBBackwards.start(Stop)
+    pwmMotorAForwards.start(0)
+    pwmMotorABackwards.start(0)
+    pwmMotorBForwards.start(0)
+    pwmMotorBBackwards.start(0)
 
 # create window
 window.title("Controller")
@@ -107,13 +107,13 @@ C.pack()
 
 # will need to replace path to image file with whatever image you want!
 img = ImageTk.PhotoImage(file="/home/pi/python_scripts/controls/Controller/analog-stick.png")
-img_cent = 200, 200 # define image centre point in pixels
-Cimg = C.create_image(img_cent[0],img_cent[1], image=img) # add image
+imgCent = 200, 200 # define image centre point in pixels
+Cimg = C.create_image(imgCent[0],imgCent[1], image=img) # add image
 
 # define actionns to take when movement or certain button clicks are recognised
 window.bind('<Motion>', motion) # reacts to motion, function tracks cursor position
-window.bind('<Button-1>', set_flag) # only start car when left mouse is clicked
-window.bind('<ButtonRelease-1>',unset_flag) # stop car when left mouse button unclicked
+window.bind('<Button-1>', setFlag) # only start car when left mouse is clicked
+window.bind('<ButtonRelease-1>',unsetFlag) # stop car when left mouse button unclicked
 
 #window.Framepack()
 window.resizable(width=False, height=False)
